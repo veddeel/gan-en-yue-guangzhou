@@ -1,0 +1,24 @@
+.featured-gift-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.featured-gift-actions .btn{min-width:0;width:100%;padding:11px 8px;text-align:center;font-size:13px;white-space:nowrap}
+.gift-materials-dialog{width:min(94vw,850px);max-height:90vh;max-height:90dvh;overflow:auto;border:1px solid #e4d5e8;border-radius:20px;padding:0;background:#fffdfa;color:#453649;box-shadow:0 24px 80px #33233c55}
+.gift-materials-dialog::backdrop{background:#2b2135a8;backdrop-filter:blur(5px)}
+.gift-materials-shell{padding:24px}
+.gift-materials-heading{display:flex;justify-content:space-between;gap:16px;align-items:start;margin-bottom:20px}
+.gift-materials-heading p{margin:0 0 5px;color:#875e96;font-size:12px;letter-spacing:2px}
+.gift-materials-heading h2{margin:0;font-family:"Songti SC",STSong,SimSun,serif;font-size:24px;line-height:1.4}
+.gift-materials-close{flex:none;border:0;background:transparent;color:#86688c;font-size:30px;line-height:1;cursor:pointer}
+.gift-materials-section{margin:0 0 24px}
+.gift-materials-section h3{margin:0 0 12px;font-size:17px}
+.gift-materials-copy{padding:18px;border-radius:14px;background:#f9f4fa;line-height:1.8;font-size:14px}
+.gift-materials-copy p{margin:0 0 1em}
+.gift-materials-copy p:last-child{margin-bottom:0}
+.gift-materials-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px}
+.gift-materials-status{color:#765183;font-size:13px;min-height:1.5em}
+.gift-materials-hint{margin:0 0 14px;color:#765183;font-size:13px;line-height:1.6}
+.gift-materials-posters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.gift-materials-poster{margin:0;padding:12px;border:1px solid #e8ddeb;border-radius:14px;background:#fff}
+.gift-materials-poster img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:contain;border-radius:8px;background:#f5eef6}
+.gift-materials-poster figcaption{margin:10px 0;font-weight:600;text-align:center}
+.gift-materials-poster-actions{display:flex;gap:8px}
+.gift-materials-poster-actions .btn{flex:1;min-width:0;padding:9px 6px;text-align:center;font-size:12px}
+@media(max-width:600px){.gift-materials-shell{padding:18px}.gift-materials-heading h2{font-size:20px}.gift-materials-posters{grid-template-columns:1fr}.gift-materials-copy{padding:14px}.gift-materials-poster{padding:10px}}

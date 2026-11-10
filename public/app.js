@@ -151,7 +151,7 @@
     }).join('');
   }
   function giftCard(g) {
-    if(g.requestOnly)return `<article class="gift-card featured-gift-card"><img class="featured-gift-image" src="${esc(g.image)}" alt="${esc(g.name)}" loading="lazy"><span class="tag gold">本月主推</span><h3>${esc(g.name)}</h3><p class="gift-price">${esc(g.estimatedPriceRange)}</p><p class="gift-use">包含：${esc(g.components)}</p><div class="gift-link"><button class="btn primary" type="button" data-request-gift="${esc(g.id)}">我想要这个</button></div></article>`;
+    if(g.requestOnly)return `<article class="gift-card featured-gift-card"><img class="featured-gift-image" src="${esc(g.image)}" alt="${esc(g.name)}" loading="lazy"><span class="tag gold">本月主推</span><h3>${esc(g.name)}</h3><p class="gift-price">${esc(g.estimatedPriceRange)}</p><p class="gift-use">包含：${esc(g.components)}</p><div class="gift-link featured-gift-actions"><button class="btn primary" type="button" data-request-gift="${esc(g.id)}">我想要这个</button><button class="btn" type="button" data-gift-materials="${esc(g.id)}">话术与海报</button></div></article>`;
     const availability=plain(g.availability||'');
     const notes=[g.name,g.linkType,g.deliveryNote,availability].join(' ');
     const stockLimited=/缺货|备选/.test(notes);
@@ -265,6 +265,7 @@
       if(button.dataset.messageFilter!=null){if(messageFilter!==button.dataset.messageFilter){messageFilter=button.dataset.messageFilter;renderMessages();}return;}
       if(button.dataset.giftFilter!=null){giftFilter=button.dataset.giftFilter;renderGifts();return;}
       if(button.dataset.requestGift){window.openFeaturedRequest?.(button.dataset.requestGift);return;}
+      if(button.dataset.giftMaterials){window.openGiftMaterials?.(button.dataset.giftMaterials);return;}
       if(button.dataset.copyMessage){const m=arr(data.action?.messages).find(x=>x.id===button.dataset.copyMessage);if(m)copy(m.text||m.body||'','微信正文已复制，空行和表情已保留');return;}
       if(button.hasAttribute('data-reopen-letter')){reopenPartnerLetter();return;}
       if(button.hasAttribute('data-copy-invitation')){copy(PARTNER_INVITATION,'来信已复制，可与行动包二维码一起转发');return;}
