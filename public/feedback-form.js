@@ -3,10 +3,18 @@
     if (!root) return;
     if (window.GRATITUDE_JINSHUJU?.feedbackFormUrl) {
       const embeddedUrl = new URL(window.GRATITUDE_JINSHUJU.feedbackFormUrl);
+      embeddedUrl.searchParams.set('embedded', 'true');
       embeddedUrl.searchParams.set('inner_redirect', 'true');
       const formUrl = embeddedUrl.toString();
-      root.innerHTML = `<section class="surface central-feedback-form"><h3>把使用感受和建议留在这里</h3><p class="jinshuju-submit-help">填写后点击表单内的“提交”，看到“提交成功”才表示反馈完成。</p><iframe class="jinshuju-form-frame" title="反馈与建议" loading="lazy"></iframe><p><a class="jinshuju-open-link" target="_blank" rel="noopener noreferrer">表单无法显示？在浏览器中打开</a></p></section>`;
-      root.querySelector('iframe').src = formUrl;
+      root.innerHTML = `<section class="surface central-feedback-form"><h3>把使用感受和建议留在这里</h3><iframe class="jinshuju-form-frame" title="反馈与建议" loading="lazy"></iframe><p><a class="jinshuju-open-link" target="_blank" rel="noopener noreferrer">表单无法显示？在浏览器中打开</a></p></section>`;
+      const frame = root.querySelector('iframe');
+      let formLoaded = false;
+      frame.addEventListener('load', () => {
+        if (frame.contentDocument?.URL === 'about:blank') return;
+        if (formLoaded) root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        formLoaded = true;
+      });
+      frame.src = formUrl;
       root.querySelector('a').href = formUrl;
       return;
     }
