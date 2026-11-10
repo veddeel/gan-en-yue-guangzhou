@@ -3,3 +3,6 @@
 window.GRATITUDE_BACKEND = { provider: 'disabled' };
 window.GRATITUDE_ORDER_ENDPOINT = 'https://landz-guangzhou-records-2026.frillymars5.chatgpt.site/api/requests';
 window.GRATITUDE_FEEDBACK_ENDPOINT = 'https://landz-guangzhou-records-2026.frillymars5.chatgpt.site/api/feedback';
+
+// Set these to the two published Jinshuju form links before switching submissions.
+window.GRATITUDE_JINSHUJU = { requestFormUrl: '', feedbackFormUrl: '' };
