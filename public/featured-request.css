@@ -18,3 +18,6 @@
 .jinshuju-form-frame{display:block;width:100%;height:min(68vh,720px);min-height:440px;border:0;background:#fff}
 .jinshuju-open-link{color:#765183;font-size:13px;text-align:center}
 .central-feedback-form .jinshuju-form-frame{height:680px;max-height:75vh}
+
+.jinshuju-submit-help{margin:0;padding:10px 12px;border:1px solid #e7d8eb;border-radius:10px;background:#f9f4fa;color:#65496f;font-size:13px;line-height:1.6}
+.central-feedback-form .jinshuju-submit-help{margin:8px 0 14px}
