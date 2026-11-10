@@ -6,7 +6,7 @@
     dialog.className = 'featured-request-dialog';
     if (window.GRATITUDE_JINSHUJU?.requestFormUrl) {
       dialog.classList.add('jinshuju-dialog');
-      dialog.innerHTML = `<div class="jinshuju-dialog-shell"><div class="request-heading"><div><p>本月主推 · 需求登记</p><h2 id="request-gift-name"></h2></div><button type="button" class="request-close" aria-label="关闭弹窗">×</button></div><p id="request-gift-detail" class="request-gift-detail"></p><iframe class="jinshuju-form-frame" title="礼物需求登记" loading="eager"></iframe><a class="jinshuju-open-link" target="_blank" rel="noopener noreferrer">表单无法显示？在浏览器中打开</a></div>`;
+      dialog.innerHTML = `<div class="jinshuju-dialog-shell"><div class="request-heading"><div><p>本月主推 · 需求登记</p><h2 id="request-gift-name"></h2></div><button type="button" class="request-close" aria-label="关闭弹窗">×</button></div><p id="request-gift-detail" class="request-gift-detail"></p><p class="jinshuju-submit-help">填写后点击表单内的“提交”，看到“提交成功”才表示登记完成。</p><iframe class="jinshuju-form-frame" title="礼物需求登记" loading="eager"></iframe><a class="jinshuju-open-link" target="_blank" rel="noopener noreferrer">表单无法显示？在浏览器中打开</a></div>`;
       document.body.append(dialog);
       dialog.querySelector('.request-close').addEventListener('click', () => dialog.close());
       dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
@@ -78,6 +78,7 @@
       };
       const formUrl = new URL(window.GRATITUDE_JINSHUJU.requestFormUrl);
       formUrl.searchParams.set('x_field_1', giftLabels[activeGift.id] || activeGift.name);
+      formUrl.searchParams.set('inner_redirect', 'true');
       dialog.querySelector('.jinshuju-form-frame').src = formUrl.toString();
       dialog.querySelector('.jinshuju-open-link').href = formUrl.toString();
       dialog.showModal();
