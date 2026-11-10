@@ -4,6 +4,14 @@
   function buildDialog() {
     dialog = document.createElement('dialog');
     dialog.className = 'featured-request-dialog';
+    if (window.GRATITUDE_JINSHUJU?.requestFormUrl) {
+      dialog.classList.add('jinshuju-dialog');
+      dialog.innerHTML = `<div class="jinshuju-dialog-shell"><div class="request-heading"><div><p>本月主推 · 需求登记</p><h2 id="request-gift-name"></h2></div><button type="button" class="request-close" aria-label="关闭弹窗">×</button></div><p id="request-gift-detail" class="request-gift-detail"></p><iframe class="jinshuju-form-frame" title="礼物需求登记" loading="eager"></iframe><a class="jinshuju-open-link" target="_blank" rel="noopener noreferrer">表单无法显示？在浏览器中打开</a></div>`;
+      document.body.append(dialog);
+      dialog.querySelector('.request-close').addEventListener('click', () => dialog.close());
+      dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+      return;
+    }
     dialog.innerHTML = `<form id="featured-request-form">
       <div class="request-heading"><div><p>本月主推 · 需求登记</p><h2 id="request-gift-name"></h2></div><button type="button" class="request-close" aria-label="关闭弹窗">×</button></div>
       <p id="request-gift-detail" class="request-gift-detail"></p>
@@ -60,6 +68,21 @@
     if (!dialog) buildDialog();
     dialog.querySelector('#request-gift-name').textContent = activeGift.name;
     dialog.querySelector('#request-gift-detail').textContent = `${activeGift.estimatedPriceRange} · 包含：${activeGift.components}`;
+    if (window.GRATITUDE_JINSHUJU?.requestFormUrl) {
+      const giftLabels = {
+        'featured-orange': '脐橙水果礼盒',
+        'featured-wreath': '感恩花环礼',
+        'featured-home': '到家装饰',
+        'featured-pear': '秋月梨水果礼盒',
+        'featured-chestnut': '栗薯礼盒'
+      };
+      const formUrl = new URL(window.GRATITUDE_JINSHUJU.requestFormUrl);
+      formUrl.searchParams.set('x_field_1', giftLabels[activeGift.id] || activeGift.name);
+      dialog.querySelector('.jinshuju-form-frame').src = formUrl.toString();
+      dialog.querySelector('.jinshuju-open-link').href = formUrl.toString();
+      dialog.showModal();
+      return;
+    }
     dialog.querySelector('#request-status').textContent = '';
     dialog.showModal();
     dialog.querySelector('[name="store"]').focus();
