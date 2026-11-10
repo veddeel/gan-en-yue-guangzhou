@@ -1,0 +1,16 @@
+.entry-brand img {display:block;width:min(330px,80vw);height:auto;margin:0 auto 14px}
+.brand-mark img {display:block;width:110px;height:auto}
+.brand-mark {display:flex;align-items:center}
+#message-grid .message-card {padding:14px 18px}
+#message-grid .message-card h3 {display:flex;gap:13px;align-items:baseline;margin:0 0 10px}
+#message-grid .message-inner {padding:0}
+@media (max-width:700px) {.brand-mark img {width:82px}.brand-chinese {padding-left:8px}}
+.sales-body .hero.letter-hero {background-image:url('assets/guangzhou-outline.svg'),linear-gradient(115deg,#f4e9f7 0%,#faf4fb 58%,#eee0f4 100%)!important;background-position:right 5% top 5%,center;background-size:180px auto,cover;background-repeat:no-repeat}
+.featured-gift-image {display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;margin:0 0 16px}
+.featured-gift-card .gift-link .btn {width:100%;text-align:center}
+.central-feedback-form{display:grid;gap:14px}
+.central-feedback-form h3,.central-feedback-form p{margin:0}
+.central-feedback-form label{display:grid;gap:6px;font-weight:600}
+.central-feedback-form input,.central-feedback-form select,.central-feedback-form textarea{width:100%;padding:11px 13px;border:1px solid #ddcfe1;border-radius:10px;background:white;color:inherit}
+.central-feedback-form button{justify-self:start}
+.feedback-submit-status{min-height:1.5em;color:#765183}

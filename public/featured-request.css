@@ -1,0 +1,14 @@
+.featured-request-dialog{width:min(92vw,480px);max-height:90vh;border:1px solid #e4d5e8;border-radius:22px;padding:0;background:#fffdfa;color:#453649;box-shadow:0 24px 80px #33233c55}
+.featured-request-dialog::backdrop{background:#2b2135a8;backdrop-filter:blur(5px)}
+.featured-request-dialog form{display:grid;gap:17px;padding:28px}
+.request-heading{display:flex;justify-content:space-between;gap:12px;align-items:start}
+.request-heading p{margin:0 0 5px;color:#875e96;font-size:12px;letter-spacing:2px}
+.request-heading h2{margin:0;font-family:"Songti SC",STSong,SimSun,serif;font-size:23px;line-height:1.4}
+.request-close{border:0;background:transparent;font-size:30px;color:#86688c;line-height:1}
+.request-gift-detail{margin:0;padding:12px 14px;border-radius:10px;background:#f6eef8;line-height:1.7;font-size:13px}
+.featured-request-dialog label{display:grid;gap:7px;font-weight:600;font-size:14px}
+.featured-request-dialog label span{color:#a24c61}
+.featured-request-dialog input,.featured-request-dialog select{width:100%;border:1px solid #d9c9da;border-radius:10px;background:white;padding:12px 13px;font-size:15px}
+.request-status{min-height:1.5em;margin:0;color:#815d8e;font-size:13px;line-height:1.6}
+.request-actions{display:flex;gap:10px;flex-wrap:wrap}
+.request-actions .btn{flex:1;min-width:100px;text-align:center}

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#7b1f2c">
+  <title>管理员入口｜广州面见礼物工作台</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+  <header class="site-header admin-header"><a class="brand" href="index.html"><img src="assets/landz-logo.png" alt="LANDZ REALTORS 丽滋行"></a><a class="back-link" href="index.html">← 返回工作台</a></header>
+  <main class="admin-shell">
+    <section class="admin-intro"><p class="eyebrow">ADMIN CONSOLE</p><h1>礼物库管理</h1><p>管理员登录后可批量导入 Excel/CSV、修改礼物信息、上传图片并控制前台上下架。</p></section>
+    <section id="setup-notice" class="notice" hidden><strong>等待连接线上数据库</strong><p>页面功能已完成。Supabase 项目接入后，管理员登录、同步更新与图片上传会自动启用。</p></section>
+    <section id="login-panel" class="admin-panel login-panel"><div><h2>管理员登录</h2><p>系统仅允许指定管理员邮箱登录。点击后将收到一次性登录链接。</p></div><div class="login-actions"><input id="login-email" type="email" readonly><button id="send-magic-link" class="button button-primary" type="button">发送登录邮件</button></div><p id="login-status" class="form-status" role="status"></p></section>
+    <section id="admin-dashboard" hidden>
+      <div class="admin-toolbar"><div><strong id="session-email"></strong><span>已登录</span></div><button id="logout-button" class="button button-ghost" type="button">退出登录</button></div>
+      <div class="admin-grid">
+        <section class="admin-panel">
+          <div class="panel-heading"><div><span>01</span><h2>Excel / CSV 导入</h2></div><a href="templates/gift-import-template.csv" download>下载模板</a></div>
+          <label class="upload-zone" for="data-file"><strong>选择或拖入文件</strong><span>支持 .xlsx、.xls、.csv；导入前会预览和校验</span><input id="data-file" type="file" accept=".xlsx,.xls,.csv,text/csv"></label>
+          <div id="import-summary" class="import-summary" hidden></div><div id="import-preview" class="table-wrap" hidden></div>
+          <div class="panel-actions"><button id="confirm-import" class="button button-primary" type="button" disabled>确认导入</button></div><p id="import-status" class="form-status" role="status"></p>
+        </section>
+        <section class="admin-panel">
+          <div class="panel-heading"><div><span>02</span><h2>新增 / 修改礼物</h2></div></div>
+          <form id="gift-form" class="gift-form"><input id="gift-id" type="hidden">
+            <label><span>礼物名称 *</span><input id="gift-name" required></label>
+            <div class="form-row"><label><span>品类 *</span><input id="gift-category" required placeholder="例如：茶饮"></label><label><span>品牌</span><input id="gift-brand"></label></div>
+            <div class="form-row"><label><span>预算档 *</span><select id="gift-band" required><option value="20-30">20–30</option><option value="30-60">30–60</option><option value="60+">60 以上</option></select></label><label><span>参考价 *</span><input id="gift-price" type="number" min="0" step="0.1" required></label></div>
+            <label><span>适用场景</span><input id="gift-scenarios" placeholder="用顿号分隔"></label><label><span>推荐理由</span><textarea id="gift-recommendation" rows="4"></textarea></label><label><span>采购链接</span><input id="gift-url" type="url" placeholder="https://"></label>
+            <label><span>礼物图片</span><input id="gift-image" type="file" accept="image/png,image/jpeg,image/webp"><small>建议横图，单张不超过 3MB</small></label>
+            <div class="form-row checkbox-row"><label><input id="gift-published" type="checkbox" checked><span>前台上架</span></label><label><span>排序</span><input id="gift-sort" type="number" value="100" step="10"></label></div>
+            <div class="panel-actions"><button class="button button-primary" type="submit">保存礼物</button><button id="reset-form" class="button button-ghost" type="button">清空表单</button></div>
+          </form><p id="form-status" class="form-status" role="status"></p>
+        </section>
+      </div>
+      <section class="admin-panel inventory-panel"><div class="panel-heading"><div><span>03</span><h2>当前礼物库</h2></div><button id="refresh-data" class="text-button dark-text" type="button">刷新数据</button></div><div id="inventory-table" class="table-wrap"></div></section>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js" defer></script><script src="config.js"></script><script src="admin.js" defer></script>
+</body>
+</html>

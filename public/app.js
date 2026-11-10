@@ -1,0 +1,343 @@
+'use strict';
+(() => {
+  const app = document.getElementById('app');
+  const mobileNav = document.getElementById('mobile-nav');
+  const PARTNER_INVITATION = "💌 致销售中心全体伙伴的一封信\n\n亲爱的伙伴：\n\n🍂 十一月，是丽兹行一年一度的感恩月。\n\n从国王与天使的彼此关怀，到爱心义卖的共同参与，我们把“感恩利他”放进具体的行动里，也珍惜每一位顾客的选择与托付。\n\n💜 也想借这个月，先对用心服务的你，说一声谢谢。\n\n耐心听完一份顾虑，仔细核实一条信息，把答应的事情继续跟进。你为顾客多想的每一步，都有价值。\n\n这个11月，让我们也主动向每一位业主和客户表达感谢。听听他最近的打算，了解需求的新变化，再准备适合他的表达与服务，让信任得到认真回应。\n\n我们把贺卡、感谢文案、伴手礼参考和专业资料入口，整理成了「丽兹行·感恩连接行动包」，希望为你的下一次联系、一次面见，多添一份准备与心意。\n\n📲 长按识别下方二维码，就能打开这份支持。\n\n愿我们把感谢说出来，把顾客在意的事做好，让温暖在每一天的服务里延续。\n\n感恩月项目组\n2026年11月";
+  const icons = {cards:'✧', messages:'≋', gifts:'♧', professional:'↧'};
+  const fieldNames = {
+    title:'内容',text:'具体内容',action:'具体行动',detail:'执行说明',responsibility:'负责什么',outputs:'交付内容',boundary:'职责边界',
+    owner:'负责人',lead:'主责',partners:'协同',deadline:'完成节点',deliverable:'交付物',standard:'完成标准',result:'达成结果',purpose:'目的',
+    role:'角色',name:'事项',for:'价值对象',provider:'内容提供',maintenance:'更新安排',useFor:'使用场景',usage:'使用方法',fields:'填写要点',
+    rhythm:'推进节奏',focus:'运营重点',look:'关注什么',do:'如何推动',minimumFeedback:'最小反馈内容',recordRule:'记录口径',
+    scope:'征集范围',collectionMethod:'征集方式',publishingMethod:'传播方式',editingNotes:'编辑要点',announcementTemplate:'征集发布文案',
+    managerRecognitionTemplate:'管理者激励参考',benchmarkShare:'标杆分享',durationMinutes:'建议时长（分钟）',executionTime:'建议执行时间',prompts:'分享问题',
+    goal:'目标',host:'组织者',preparation:'提前准备',agenda:'研讨流程',minutes:'环节时长（分钟）',hostWords:'主持参考',questions:'讨论问题',
+    output:'本环节输出',storeOutputs:'单店四项输出',closingWords:'收尾引导',intro:'使用说明',days:'一周行动',day:'建议安排',
+    weeklyReflection:'每周回看',confirmed:'已明确规则',tiers:'支持档位',counting:'计数口径',calculation:'计算方式',sharingProcess:'分摊与报销流程',
+    examples:'计算示例',historicalBaseline:'历史参考',implementationAssumptions:'实施安排',step:'步骤',note:'提醒',entry:'使用入口',content:'内容',
+    audience:'适用对象',audiences:'对象分类',status:'状态',metric:'指标',target:'目标',definition:'统计口径',source:'数据来源',use:'使用方式',
+    layer:'结果层次',group:'对象大类',type:'对象',priority:'优先级',depth:'行动深度',record:'记录方式',module:'模块',
+    invitation:'征集倡议',submissionFields:'提交内容',label:'填写项',required:'是否必填',groupMessage:'群发布参考',videoEndTitle:'片尾标题',
+    videoEndSubtitle:'片尾说明',videoEndActions:'片尾行动提示',videoEndClosing:'片尾收尾',culture:'文化价值',reason:'设计依据',
+    item:'事项',check:'验收方法',criteria:'验收标准',expected:'预期结果',risk:'需关注',decision:'处理安排',assumption:'实施假设',
+    reference:'参考依据',amount:'支持金额',count:'份数',store:'门店',month:'月份',total:'合计',mean:'单店均值',median:'中位数',
+    rule:'规则',process:'步骤',method:'方法',frequency:'频次',deadlineRule:'节点要求',notes:'补充说明',update:'更新方式',
+    recipient:'适用对象',scenario:'使用场景',export:'导出方式',footer:'署名区',heading:'卡片标题',body:'正文',printSuggestion:'打印建议',
+    acceptance:'验收与复盘',assumptions:'实施安排',background:'项目背景',budgetNote:'预算说明',caseOperations:'案例与激励运营',
+    collection:'案例征集',date:'时间',effects:'最终价值',fees:'费用规则',foundations:'基础配套',gifts:'送出份数',headline:'总目标',
+    materialDelivery:'物料交付',max:'份数上界',min:'份数起点',metrics:'结果指标',monthEnd:'月末收口',months:'参考月份',period:'项目周期',
+    positioning:'项目定位',problems:'解决的问题',publishing:'传播安排',quantity:'份数',region:'大区',regionBacktest:'大区历史回测',
+    remainingCost:'待共同承担费用',reward:'激励安排',roles:'责任分工',schedule:'执行排期',selection:'案例选择',septemberBacktest:'9月档位回测',
+    septemberDistribution:'9月门店分布',septemberMedian:'9月单店中位数',sources:'资料来源',stores:'门店数',subgoals:'子目标',support:'支持经费',
+    supports:'支撑安排',theme:'项目主题',threeMonthMeanPerStore:'三个月单店月均',threeMonthTotal:'三个月合计',through:'通过做什么',
+    tier:'对应档位',topSupports:'前三项关键支撑',totalGoal:'总目标',url:'来源链接',weeklyOperations:'周度运营',
+    companionText:'配套表达参考',framework:'表达框架',steps:'步骤',materials:'可选物料',template:'参考模板',usageNotes:'使用提醒',
+    subtitle:'主题说明',home:'首页共识',eyebrow:'行动主题',opening:'开场倡议',cultureTitle:'感恩文化',cultureBody:'文化内涵',
+    whyNovemberTitle:'感恩月契机',whyNovemberBody:'行动背景',interaction:'互动倡议',prompt:'想一想',hint:'行动提示',cta:'开始行动',
+    actionSteps:'行动步骤',quickActions:'取用入口',description:'内容说明',button:'操作入口',serviceReminder:'服务提醒',storyPrompt:'故事分享倡议',
+    closing:'收尾倡议',category:'对象分类',order:'显示顺序',online:'线上表达',offline:'线下递送',messageGuide:'表达使用方法',messages:'表达参考',
+    audienceId:'适用对象',scene:'适用场景',customize:'请补充的真实内容',cards:'贺卡模板',editableFields:'可定制内容',placeholder:'填写示例',
+    recommendedMax:'建议字数',workshop:'单店文化研讨',professionalMaterials:'专业资料',stories:'服务故事',emptyState:'分享倡议',
+    weekAction:'每周行动参考',launchCopy:'启动发布参考',external:'外部文化背景',company:'丽兹行感恩文化',meaning:'现代感恩精神',
+    channel:'使用方式',dimensions:'样张尺寸',files:'下载文件',previewNote:'样张说明',updatedAt:'更新日期',notes:'使用说明',
+    acceptanceMethod:'验收方式',completion:'完成要求',progress:'进度情况'
+  };
+  const omitKeys = new Set(['id','version','sourceRef','recommendedIds','checkedAt','recommendedBodyMax','design','key','no','number','fileId','libraryFileId','audienceId','order']);
+  const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const arr = v => Array.isArray(v) ? v : v == null ? [] : [v];
+  const plain = v => typeof v === 'string' ? v : Array.isArray(v) ? v.map(plain).join('；') : v && typeof v === 'object' ? Object.values(v).filter(x=>typeof x==='string').join('；') : String(v ?? '');
+  const safeUrl = value => { try { const u = new URL(value, location.href); return ['https:','http:','file:'].includes(u.protocol) ? u.href : '#'; } catch { return '#'; } };
+  const lines = value => String(value ?? '').replace(/\\n/g,'\n').split(/[\r\n]+/).map(s=>s.trim()).filter(Boolean);
+  const textBlock = value => lines(value).map(line => `<p>${esc(line)}</p>`).join('');
+  const labelFor = key => fieldNames[key] || (/^[a-z][a-z0-9_]*$/i.test(key) ? '补充说明' : key);
+  const short = (v, limit=180) => {const s=plain(v);return s.length>limit?s.slice(0,limit)+'…':s;};
+  function readable(value, level=0) {
+    if (value == null) return '';
+    if (typeof value === 'string' || typeof value === 'number') return `<div class="reading">${textBlock(value)}</div>`;
+    if (typeof value === 'boolean') return value ? '是' : '否';
+    if (Array.isArray(value)) return `<div class="reading-array">${value.map(v=> typeof v==='string' ? `<div class="numbered-item"><b>·</b><div>${textBlock(v)}</div></div>` : `<div class="reading-object">${readable(v,level+1)}</div>`).join('')}</div>`;
+    return `<div class="reading">${Object.entries(value).filter(([key,val])=>!omitKeys.has(key)&&val!=null&&val!==''&&!(Array.isArray(val)&&!val.length)).map(([key,val])=>`<div class="property"><span class="property-label">${esc(labelFor(key))}：</span>${typeof val === 'object' ? readable(val,level+1) : key==='url'?`<a href="${esc(safeUrl(val))}" target="_blank" rel="noopener noreferrer">查看原始资料 ↗</a>`:textBlock(val)}</div>`).join('')}</div>`;
+  }
+  function numbered(items) {
+    return arr(items).map((item,i)=>`<div class="numbered-item"><b>${esc(item?.no || '①②③④⑤⑥⑦⑧⑨⑩'[i] || (i+1))}</b><div>${typeof item==='string'?textBlock(item):`<strong>${esc(item.title||'')}</strong>${textBlock(item.text || item.detail || item.action || '')}`}</div></div>`).join('');
+  }
+  const heading = (id,kicker,title,description,no='') => `<section class="section" id="${id}"><div class="section-heading"><div><p class="section-kicker">${esc(kicker)}</p><h2>${esc(title)}</h2>${description?`<p class="section-intro">${esc(description)}</p>`:''}</div><span class="section-number" aria-hidden="true">${esc(no)}</span></div>`;
+  let data, messageFilter='owner_on_sale', giftFilter='featured', toastTimer;
+  function toast(text) {const el=document.getElementById('toast');clearTimeout(toastTimer);el.textContent=text;el.classList.add('show');toastTimer=setTimeout(()=>el.classList.remove('show'),2500);}
+  async function copy(text,success='已复制，补上真实细节后就可以发送') {
+    try {
+      if(navigator.clipboard&&window.isSecureContext) await navigator.clipboard.writeText(text);
+      else {const field=document.createElement('textarea');field.value=text;field.style.cssText='position:fixed;left:-9999px';document.body.append(field);field.select();if(!document.execCommand('copy'))throw new Error('copy');field.remove();}
+      toast(success);
+    } catch {toast('请长按选中文字复制');}
+  }
+  function downloadText(text,name) {
+    const url=URL.createObjectURL(new Blob(['\ufeff'+text],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
+  }
+  function objectToText(v, depth=0) {
+    if(v==null)return '';
+    if(typeof v!=='object')return String(v);
+    if(Array.isArray(v))return v.map(x=>objectToText(x,depth+1)).join('\n');
+    return Object.entries(v).filter(([k])=>!omitKeys.has(k)).map(([k,val])=>`${labelFor(k)}：${objectToText(val,depth+1)}`).join('\n');
+  }
+  function renderAction() {
+    const a=data.action||{}, h=a.home||{}, fees=data.project?.fees||{};
+    const showFeeSupport=fees.visibleToSales===true;
+    const supportLabel=showFeeSupport?'补充资料与费用支持':'文化研讨与补充资料';
+    const workshopMinutes=Number(a.workshop?.durationMinutes)||180;
+    const workshopDuration=workshopMinutes%60===0?`${workshopMinutes/60}小时（${workshopMinutes}分钟）`:`${workshopMinutes}分钟`;
+    document.title='丽兹行广州感恩连接行动包｜贺卡・文案・伴手礼';
+    const sections=[['start','01','伙伴来信与行动说明'],['cards','02','贺卡定制与下载'],['messages','03','分场景感谢文案'],['gifts','04','伴手礼推荐与预算'],['feedback','05','反馈与建议']];
+    const directoryLinks=sections.map(([id,no,title])=>`<a href="#${id}" data-section-link><span>${no}</span><b>${title}</b></a>`).join('');
+    const directory=`<aside class="sales-directory" aria-label="行动包目录"><div class="directory-title"><span>LANDZ SERVICE TOOLKIT</span><h2>感恩连接<br>行动物料包</h2><p>面向销售中心的顾客服务工具<br>选择内容，编辑后即可取用。</p></div><nav class="directory-links" aria-label="功能目录">${directoryLinks}</nav><a class="directory-qr" href="qr.html">分享行动包二维码 <span aria-hidden="true">↗</span></a></aside>`;
+    const phoneDirectory=`<details class="phone-directory"><summary><span>更多内容</span><b>行动说明 · 反馈</b></summary><nav class="directory-links" aria-label="手机补充内容目录"><a href="#consensus" data-section-link><span>01</span><b>行动说明与目标</b></a><a href="#feedback" data-section-link><span>05</span><b>反馈与建议</b></a></nav></details>`;
+    const hero=`<section class="hero letter-hero" id="start"><div class="hero-layout"><div class="hero-content"><p class="eyebrow">NOVEMBER 2026 · 感恩相连，服务有光</p><p class="hero-tool-name">丽兹行 · 感恩连接行动包</p><h1>致销售中心<br><em>全体伙伴的一封信</em></h1><p class="letter-salutation">亲爱的伙伴：</p><div class="letter-intro"><p>🍂 十一月，是丽兹行一年一度的感恩月。</p><p>从国王与天使的彼此关怀，到爱心义卖的共同参与，我们把“感恩利他”放进具体的行动里，也珍惜每一位顾客的选择与托付。</p><p>💜 也想借这个月，先对用心服务的你，说一声谢谢。</p></div><details class="welcome-letter-more" ${window.matchMedia('(min-width: 761px)').matches?'open':''}><summary>读完这封信</summary><div class="letter-rest"><p>每一次耐心倾听、每一份仔细准备、每一项持续跟进，都有你的用心。你为顾客多想的一步，值得被看见，也值得被珍惜。</p><p>顾客给予我们的选择与托付，同样值得认真回应。让我们主动听听每一位业主和客户最近的打算，关心需求有哪些变化，再把真诚的感谢和合适的服务送到他身边。</p><p>我们也为你准备了这份感恩连接行动包。贺卡、表达文案、伴手礼参考和专业资料入口，希望能让你的下一次联系、一次面见，多一份从容与心意。</p><p>愿这份支持陪着你，把感谢说具体，把顾客在意的事做好，让温暖在每一天的服务里延续。</p><p class="letter-signature">感恩月项目组</p><p class="letter-date">2026年11月</p></div></details><div class="letter-tools-next"><a class="btn primary" href="#tools" id="letter-tool-link">收好这封信，打开行动包</a></div><div class="letter-share"><button class="btn" type="button" data-copy-invitation>复制微信转发文案</button><a href="qr.html" class="btn">行动包二维码</a><button type="button" class="btn" data-reopen-letter>再开启这封信</button></div></div><aside class="hero-guide" aria-label="兰斯博士"><div class="ip-portrait"><img src="media/dr-lans.webp" alt="兰斯博士：丽兹行AI服务伙伴" width="1254" height="1254" fetchpriority="high"></div><p class="companion-caption">兰斯博士 · 陪你一起行动</p></aside></div></section>`;
+    const aim=`<details class="sales-aim usage-guide" id="how-to"><summary><span>行动包怎么用？</span><small>查看三步使用说明</small></summary><div class="sales-aim-grid"><article><b>01</b><h3>先了解，现在需要什么</h3><p>回顾服务经历，主动听听顾客最近的打算和变化，确认当下关心的问题。</p></article><article><b>02</b><h3>选内容，写下真实感谢</h3><p>按顾客关系与服务阶段，选择贺卡和文案，补充你们之间真实的经历与细节。</p></article><article><b>03</b><h3>配服务，把约定做到</h3><p>准备有用的专业资料或适宜的心意，主动联系、面见，并把后续服务逐项跟进。</p></article></div></details>`;
+    const shortcuts=[{id:'cards',title:'贺卡定制',description:'5种风格，定制后保存'},{id:'messages',title:'感谢文案',description:'18个场景，按需选用'},{id:'gifts',title:'伴手礼参考',description:'按预算挑选得体心意'}];
+    const quick=`<section class="tool-launcher" id="tools" aria-labelledby="tool-launcher-title"><div class="tool-launcher-heading"><h2 id="tool-launcher-title">常用工具</h2></div><div class="quick-grid">${shortcuts.map((q,i)=>`<a class="quick-card" href="#${esc(q.id)}"><div class="quick-top"><span class="quick-icon">${icons[q.id]||'✧'}</span><span class="quick-number">0${i+2}</span></div><h3>${esc(q.title)}</h3><p>${esc(q.description)}</p><span class="arrow" aria-hidden="true">↗</span></a>`).join('')}</div></section>`;
+    const consensus=heading('consensus','01 · ACTION GUIDE','感恩月目标与行动说明','11月1日—30日，把心里的感谢主动表达出来，也把顾客当下需要的服务准备好。','01')+`<div class="action-guide-body"><h3 class="guide-title">目标、服务对象与行动重点</h3><div class="consensus-grid"><article class="surface consensus-main"><p class="quote-line">珍惜顾客的信任，从主动理解他的需要开始。</p><div class="reading"><p>顾客愿意分享家庭的需要、房产的安排与重要的选择，让我们的专业有了创造价值的机会。感恩利他，体现在记得对方关心的事，也愿意主动了解新的想法，并随需求变化调整服务。</p><p>这个月，我们面向全量业主与客户主动表达感谢；在售业主重点推进线下面见。一次真诚的问候、一份有用的信息、一张定制贺卡、一项认真完成的服务，都可以让感谢被感受到。</p></div><div class="callout"><p><strong>先倾听 → 再准备 → 主动表达 → 持续跟进</strong><br>让顾客更了解你的专业与用心，也更了解丽兹行能够为他做什么。</p></div></article><article class="surface"><h3>为什么在11月，一起行动？</h3><div class="reading"><p>11月有集中表达感谢的文化契机。丽兹行每年的感恩月，通过国王与天使传递伙伴间的感谢，通过爱心义卖参与社会回馈，也把这份感谢带进与顾客的日常服务。</p><p>感恩在每一天，11月更主动地表达。这里统一准备了感性表达与专业服务工具，方便你根据顾客的关系、当前需求和服务阶段，快速选择、个性定制并直接使用。</p></div><ul class="guide-facts"><li><strong>服务对象</strong><span>全量业主与客户；保安、物业、管家另作感谢与记录。</span></li><li><strong>行动重点</strong><span>全量线上表达，在售业主重点面见，服务随需求变化调整。</span></li><li><strong>物料用途</strong><span>顾客表达、主动联系、面见准备与后续专业服务。</span></li></ul></article></div><div class="guide-audiences"><h3 class="guide-title">对象分类与建议服务深度</h3><div class="reading audience-grid">${arr(a.audiences).sort((x,y)=>(x.order||0)-(y.order||0)).map(x=>`<article class="audience-card"><span class="tag ${x.priority?.includes('S')?'gold':''}">${esc(x.priority||x.category||'服务对象')}</span><h3>${esc(x.label||x.type||x.category||'顾客服务')}</h3><p>${esc(x.online||x.action||'主动表达感谢，提供具体服务。')}</p><p>${esc(x.depth||'')}</p></article>`).join('')}</div></div></div></section>`;
+    const cards=heading('cards','02 · PERSONALIZED CARDS','贺卡定制与下载','5种商务风格，选择设计后编辑内容，即可预览并下载线上发送的 JPG 贺卡。','02')+`<div class="tool-guide"><img src="media/dr-lans.webp" alt="" width="56" height="56" loading="lazy"><p><strong>兰斯博士的小提示</strong>先选择适合顾客的风格，再写入真实的感谢与下一步服务；五种设计可随时切换。</p></div><div id="card-maker-root"></div></section>`;
+    const messages=heading('messages','03 · CLIENT COMMUNICATION','分场景感谢文案','选择服务对象，即可查看对应的具体话术。复制正文后，把示例换成你们之间的真事。','03')+`<div class="message-guide"><strong>推荐表达顺序</strong><span>感谢一段真实经历</span><i>→</i><span>了解当下的需要</span><i>→</i><span>提出具体的服务</span></div><div class="filters" id="message-filters" role="group" aria-label="文案分类目录"></div><div class="message-grid" id="message-grid"></div><div class="callout"><p>复制后，按你平时和对方说话的习惯改一改。涉及带看、成交或市场数据，只使用已核实且可以分享的信息。</p></div></section>`;
+    const gifts=heading('gifts','04 · THOUGHTFUL GIFTS','伴手礼推荐与预算','按预算、顾客偏好与递送场景选择，一份得体的心意，也配上一项切实有用的服务。','04')+`<div class="filters" id="gift-filters"></div><div id="gift-results"></div><div class="callout"><p>${esc(data.gifts?.priceDisclaimer||'展示价格为参考预算，请以下单页面实际价格为准。')}<br>${esc(data.gifts?.deliveryPolicy||'提前填写上海具体地址核验配送时效，建议使用日前三天完成准备。')}</p></div></section>`;
+    const profCards=[['hmall图','项目组统一提供最新版本，下载后结合顾客关注点使用。'],['市场报告','由业务管理部门发布，项目组统一更新；使用时留意报告日期、统计范围与来源。']];
+    const marketReport=arr(a.professionalMaterials).find(item=>item.id==='market_report');
+    const marketRelease=marketReport?.releasePlan;
+    const cityReport=marketReport?.cityReport;
+    const cityReportNote=cityReport?`<div class="market-release-note"><p><strong>${esc(cityReport.title)}</strong></p><p>${esc(cityReport.online)}</p><p>${esc(cityReport.print)}</p></div>`:'';
+    const professional=heading('professional','05 · PROFESSIONAL RESOURCES','专业资料下载','根据顾客关注点准备专业内容，帮助客户比较选择，也让业主更清楚当前市场与后续安排。','05')+`<div class="professional-intro">${profCards.map(([title,text])=>`<article class="professional-card"><h3>${title}</h3><p>${text}</p>${title==='hmall图'?'<div id="hmall-material-list" class="hmall-material-list" hidden></div><div id="hmall-upload-root"></div>':''}${title==='市场报告'?cityReportNote:''}${title==='市场报告'&&marketRelease?`<div class="market-release-note"><p><strong>${esc(marketRelease.title)}</strong></p><p>发布日期：${esc(marketRelease.publishDate)}</p><p>${esc(marketRelease.series)}</p><p>暂定主题：<br>「${esc(marketRelease.tentativeTheme)}」</p></div>`:''}</article>`).join('')}</div><div class="material-list" id="material-list" hidden></div></section>`;
+    const feedback=heading('feedback','05 · YOUR FEEDBACK','反馈与建议','您的使用感受和建议，帮助我们把支持做得更贴近需要。','05')+`<div id="private-feedback-root"></div></section>`;
+    const tiers=arr(fees.tiers).length?fees.tiers:[{label:'0—10份',amount:0},{label:'11—20份',amount:100},{label:'21—30份',amount:200},{label:'31—40份',amount:300},{label:'41—50份',amount:400},{label:'51份及以上',amount:500}];
+    const feeSupport=showFeeSupport?`<details class="detail-panel support-panel"><summary><span>基础支持 · 单店全月服务经费</span><small>按实际行动给予支持，每店全月最高500元</small></summary><div class="reading"><div class="fees-grid"><article class="surface"><h3>单店全月支持档位</h3><table class="fee-table"><thead><tr><th>11月顾客礼物实际送出量</th><th>大区总支持上限</th></tr></thead><tbody>${tiers.map(t=>`<tr><td>${esc(t.label||`${t.min}—${t.max??'以上'}份`)}</td><td>${esc(t.amount)}元</td></tr>`).join('')}</tbody></table><p class="gift-note">按达到的最高档确定，档位不累加；500元是每家店全月的支持上限。</p></article><article class="calculator"><h3>算一算，这家店可获得多少支持</h3><div class="calc-field"><label for="gift-count">当月顾客礼物实际送出（份）</label><input id="gift-count" type="number" min="0" max="10000" step="1" inputmode="numeric" value="0"></div><div class="calc-field"><label for="gift-cost">实际可分摊费用（元，选填）</label><input id="gift-cost" type="number" min="0" step="0.01" inputmode="decimal" placeholder="填写后可校验实际支持额"></div><div class="calc-field"><label for="other-share">其他层级最终承担费用（元，选填）</label><input id="other-share" type="number" min="0" step="0.01" inputmode="decimal" placeholder="采购垫付款不直接视为最终承担"></div><div class="calc-output"><span id="calc-label">档位支持上限</span><strong id="calc-result">0<small>元</small></strong></div><p class="calc-explain" id="calc-explain">按单店最高档计算，不累加，不超过500元。</p></article></div><div class="support-rules"><h4>采购与费用，先说清楚</h4><p>礼品库预算是选款参考，实际费用按现行分摊与报销制度执行。采购前由店总、经理与参与者说清各方承担，保留采购、付款和实际送出记录。</p><p>实际支持不超过扣除其他层级最终承担金额后的可分摊费用；垫付款不直接视为最终承担，同一笔费用不重复分摊。</p><details class="more-content"><summary>查看送出量统计口径</summary>${readable(fees.counting)}</details></div></div></details>`:'';
+    const supports=heading('support','A LITTLE MORE SUPPORT',supportLabel,showFeeSupport?'文化研讨方案、补充资料下载与单店服务经费说明，按需查看和使用。':'文化研讨方案与补充资料下载，按需查看和使用。','＋')+`<details class="detail-panel support-panel"><summary><span>文化研讨方案</span><small>单店一起聊清楚，回到服务中行动</small></summary><div class="reading"><div class="workshop-bar"><div><h3>${esc(a.workshop?.title||'感恩主题单店文化研讨')}</h3><p><strong>${esc(workshopDuration)}</strong> · 含10分钟休息 · 共同参与，形成具体行动</p><p><strong>建议执行时间：</strong>${esc(a.workshop?.executionTime||'11月第一周，优先安排在11月3日月会启动后至11月7日')}</p></div><button class="btn" data-download-workshop>下载主持方案</button></div><details class="more-content"><summary>展开完整研讨方案</summary><div class="reading">${readable(a.workshop)}</div></details></div></details><details class="detail-panel support-panel"><summary><span>补充资料下载</span><small>项目组统一提供，按需取用</small></summary><div class="reading"><div class="material-list" id="supplement-material-list"><div class="empty-state"><strong>正在读取补充资料</strong><p>其他行动资料将在这里统一提供。</p></div></div></div></details>${feeSupport}</section>`;
+    app.innerHTML=`<div class="sales-layout">${directory}<div class="sales-body page-shell">${hero}${quick}${phoneDirectory}${aim}${consensus}${cards}${messages}${gifts}${feedback}</div></div>`;
+    mobileNav.innerHTML=shortcuts.map(q=>`<a href="#${esc(q.id)}"><span>${icons[q.id]||'✧'}</span>${esc(({cards:'贺卡定制',messages:'场景文案',gifts:'伴手礼',professional:'专业资料'})[q.id])}</a>`).join('');
+    renderMessages();renderGifts();
+    const feedbackRoot=document.getElementById('private-feedback-root');
+    if(typeof window.mountCentralFeedback==='function')window.mountCentralFeedback(feedbackRoot);
+    if(typeof window.mountHmallUpload==='function')window.mountHmallUpload(document.getElementById('hmall-upload-root'),{onPublished:async()=>{const result=await loadMaterials();if(!result?.hmallCount)throw new Error('uploaded file not yet listed');}});
+    document.querySelectorAll('#gift-count,#gift-cost,#other-share').forEach(x=>x.addEventListener('input',updateFee));updateFee();
+    if(typeof window.mountCardMaker==='function') {
+      try {window.mountCardMaker(document.getElementById('card-maker-root'),{cards:a.cards,logoDataUrl:window.GRATITUDE_ASSETS?.logoDataUrl});}
+      catch(error) {document.getElementById('card-maker-root').innerHTML='<div class="empty-state"><strong>贺卡组件暂未载入</strong><p>请刷新重试，或使用下方的贺卡模板样张。</p></div>';console.error(error);}
+    } else document.getElementById('card-maker-root').innerHTML='<div class="empty-state"><strong>贺卡组件暂未载入</strong><p>请刷新后再试。</p></div>';
+  }
+  function renderMessages() {
+    const messages=arr(data.action?.messages);
+    const groupKey=m=>m.audienceId||m.audience;
+    const groups=new Map();
+    for(const m of messages){
+      const key=groupKey(m);
+      if(!groups.has(key))groups.set(key,[]);
+      groups.get(key).push(m);
+    }
+    if(!groups.has(messageFilter))messageFilter=groups.keys().next().value;
+    const filters=document.getElementById('message-filters');
+    if(!filters.childElementCount){
+      filters.innerHTML=Array.from(groups,([key,items])=>{
+        const label=key==='all_customers'?'顾客通用场景':items[0].audience||key;
+        return `<button type="button" class="filter-btn" data-message-filter="${esc(key)}" aria-controls="message-grid">${esc(label)} <small>${items.length}</small></button>`;
+      }).join('');
+    }
+    filters.querySelectorAll('button').forEach(button=>{
+      const selected=button.dataset.messageFilter===messageFilter;
+      button.classList.toggle('active',selected);
+      button.setAttribute('aria-pressed',String(selected));
+    });
+    const filtered=groups.get(messageFilter)||[];
+    const grid=document.getElementById('message-grid');
+    grid.innerHTML=filtered.map((m,i)=>{
+      const title=(m.title||'场景文案').replace(/^(?:在售业主|非在售业主|全盘非在售业主|已成交客户|未成交客户|物业、保安、管家|保安、物业、管家)｜/,'');
+      return `<article class="message-card"><h3><span class="scene-no" aria-hidden="true">${String(i+1).padStart(2,'0')}</span>${esc(title)}</h3><div class="message-inner"><div class="tags"><span class="tag gold">${esc(m.scene||'感谢表达')}</span></div><p class="message-text">${esc(m.text||m.body||'')}</p>${m.customize?.length?`<p class="message-tip">发送前核对：${esc(arr(m.customize).join('、'))}</p>`:''}${m.note?`<p class="message-tip">${esc(m.note)}</p>`:''}<div class="card-actions"><button type="button" class="btn primary" data-copy-message="${esc(m.id)}">复制微信正文</button></div></div></article>`;
+    }).join('');
+  }
+  function giftCard(g) {
+    if(g.requestOnly)return `<article class="gift-card featured-gift-card"><img class="featured-gift-image" src="${esc(g.image)}" alt="${esc(g.name)}" loading="lazy"><span class="tag gold">本月主推</span><h3>${esc(g.name)}</h3><p class="gift-price">${esc(g.estimatedPriceRange)}</p><p class="gift-use">包含：${esc(g.components)}</p><div class="gift-link"><button class="btn primary" type="button" data-request-gift="${esc(g.id)}">我想要这个</button></div></article>`;
+    const availability=plain(g.availability||'');
+    const notes=[g.name,g.linkType,g.deliveryNote,availability].join(' ');
+    const stockLimited=/缺货|备选/.test(notes);
+    const inquiry=/询价|起订/.test(notes);
+    const badge=stockLimited?'备选 · 先核库存':inquiry?'需询价':g.category;
+    const isCatalogue=/搜索|选购|目录页|店铺|官方店/.test(g.linkType||'');
+    const linkLabel=inquiry?'查看并询价':isCatalogue?'前往选款':g.platform==='京东'?'打开京东商品':'查看商品';
+    const fields=[
+      ['适用对象',plain(g.recipient)],['规格',g.packSpec],['产地',g.originText],
+      ['发货',g.dispatchText],['采购渠道',g.shopText],['递送方式',g.mailOrFace],
+      ['链接类型',g.linkType],['价格依据',g.priceBasis],['选购建议',g.selectionNote],
+      ['库存提示',availability],['到货确认',g.deliveryNote||'下单前填写上海收货地址，核对库存与预计送达时间。']
+    ];
+    const price=g.estimatedPriceRange||g.budgetTier;
+    return `<article class="gift-card">
+      ${badge?`<span class="tag ${stockLimited||inquiry?'availability':'gold'}">${esc(badge)}</span>`:''}
+      <h3>${esc(g.name)}</h3>
+      ${price?`<p class="gift-price">${g.freshGift?'':'参考预算 · '}${esc(price)}</p>`:''}
+      <p class="gift-use">${esc(g.scenario)}</p>
+      <div class="gift-link"><a class="btn" href="${esc(safeUrl(g.purchaseUrl||g.fallbackUrl))}" target="_blank" rel="noopener noreferrer">${esc(linkLabel)} ↗</a></div>
+      <details class="gift-delivery"><summary>规格、选购与配送</summary><dl>${fields.filter(([,value])=>value).map(([label,value])=>`<dt>${label}</dt><dd>${esc(value)}</dd>`).join('')}</dl></details>
+    </article>`;
+  }
+  function renderGifts() {
+    const list=Array.isArray(data.gifts)?data.gifts:arr(data.gifts?.items||data.gifts?.gifts);
+    const options=[['featured','本月主推'],['all','全部礼品'],['fruit','时令水果礼盒'],['≤30元','20—30元'],['30—60元','30—60元'],['>60元','60元以上']];
+    const filters=document.getElementById('gift-filters');
+    if(!filters.childElementCount)filters.innerHTML=options.map(([key,label])=>`<button type="button" class="filter-btn" data-gift-filter="${esc(key)}">${label}</button>`).join('');
+    filters.querySelectorAll('button').forEach(button=>{
+      const active=button.dataset.giftFilter===giftFilter;
+      button.classList.toggle('active',active);
+      button.setAttribute('aria-pressed',String(active));
+    });
+    const results=document.getElementById('gift-results');
+    if(giftFilter!=='all'){
+      const matches=giftFilter==='featured'?list.filter(g=>g.priority):list.filter(g=>giftFilter==='fruit'?g.freshGift===true:g.budgetTier===giftFilter);
+      results.innerHTML=`<p class="gift-count" role="status">共 ${matches.length} 款</p><div class="gift-grid" id="gift-grid">${matches.map(giftCard).join('')}</div>`;
+      return;
+    }
+    results.innerHTML=`<p class="gift-count" role="status">共 ${list.length} 款</p><div class="gift-grid" id="gift-grid">${list.map(giftCard).join('')}</div>`;
+  }
+  async function loadMaterials() {
+    const el=document.getElementById('material-list'),extra=document.getElementById('supplement-material-list'),hmall=document.getElementById('hmall-material-list');if(!el||!extra||!hmall)return;
+    const row=file=>`<article class="material-row"><span class="file-icon">${esc((file.fileName||'FILE').split('.').at(-1).toUpperCase().slice(0,5))}</span><div class="file-info"><h3>${esc(file.title||file.fileName)}</h3><p>${esc(({hmall:'hmall图',market:'市场报告',other:'补充资料'})[file.category]||'补充资料')} · ${esc(file.date||String(file.updatedAt||'').slice(0,10))}${file.source?`<br>来源：${esc(file.source.replace(/Liya|Leah/gi,'项目组'))}`:''}</p></div><a href="${esc(safeUrl(file.downloadUrl||file.url))}" class="btn" download="${esc(file.fileName||'行动资料')}">下载 ↧</a></article>`;
+    const empty=(title,text)=>`<div class="empty-state"><strong>${title}</strong><p>${text}</p></div>`;
+    try {
+      let value;
+      if(location.protocol==='file:')value=window.GRATITUDE_MATERIALS||data.materials||[];
+      else {
+        const endpoint=window.GRATITUDE_SUPABASE_ENABLED?'/api/materials':'./materials.json';
+        const res=await fetch(endpoint,{headers:{Accept:'application/json'},cache:'no-store'});if(!res.ok)throw new Error('unavailable');
+        value=await res.json();
+      }
+      const items=(Array.isArray(value)?value:arr(value.materials||value.items||value.files)).filter(x=>x.active!==false);
+      const hmallFiles=items.filter(file=>file.category==='hmall');
+      const professional=items.filter(file=>file.category==='market');
+      const supplements=items.filter(file=>!['hmall','market'].includes(file.category));
+      hmall.innerHTML=hmallFiles.map(file=>`<div class="hmall-file"><strong>${esc(file.title||file.fileName)}</strong><small>${esc(file.date||String(file.updatedAt||'').slice(0,10))}${file.fileName?' · '+esc(file.fileName):''}</small><a href="${esc(safeUrl(file.downloadUrl||file.url))}" class="btn" download="${esc(file.fileName||'hmall图.pdf')}">下载hmall图 ↧</a></div>`).join('');
+      hmall.hidden=!hmallFiles.length;
+      el.innerHTML=professional.map(row).join('');el.hidden=!professional.length;
+      extra.innerHTML=supplements.length?supplements.map(row).join(''):empty('更多支持，陆续补充','项目组发布的其他行动资料会出现在这里。<br>你也可以先取用上方的贺卡、表达参考和文化研讨方案。');
+      return {hmallCount:hmallFiles.length};
+    }catch(error){
+      el.innerHTML='';el.hidden=true;hmall.hidden=false;hmall.innerHTML='<p class="material-inline-notice">资料暂未读取，请稍后刷新查看</p>';
+      extra.innerHTML=empty('补充资料暂未读取','请稍后刷新，其他行动工具可继续使用。');
+    }
+  }
+  async function loadTemplates() {
+    const el=document.getElementById('template-gallery');if(!el)return;
+    try {
+      let manifest=data.templates||window.GRATITUDE_TEMPLATES;
+      if(!manifest&&location.protocol!=='file:'){
+        const response=await fetch('./templates/manifest.json?v=20261030-bright-v2',{headers:{Accept:'application/json'},cache:'no-store'});
+        if(!response.ok)throw new Error('templates unavailable');
+        manifest=await response.json();
+      }
+      if(!manifest&&location.protocol==='file:'){
+        manifest={items:['online','offline'].flatMap(channel=>arr(data.action?.cards?.[channel]).map(card=>({id:card.id,title:card.title,channel,dimensions:channel==='online'?'1080×1440px':'A6横版 · 148×105mm',files:{png:`templates/${card.id}.png`,...(channel==='offline'?{pdf:`templates/${card.id}.pdf`}:{})}})))};
+      }
+      const templates=Array.isArray(manifest)?manifest:arr(manifest?.items);
+      if(!templates.length)throw new Error('templates empty');
+      const templateUrl=value=>{const source=safeUrl(value);if(source==='#'||source.startsWith('file:'))return source;const url=new URL(source,location.href);url.searchParams.set('v','20261030-bright-v2');return url.href;};
+      el.innerHTML=templates.map(card=>{
+        const files=card.files||{},png=files.png||card.preview;
+        return `<article class="template-card"><a class="template-preview ${card.channel==='offline'?'offline':'online'}" href="${esc(templateUrl(png))}" target="_blank" rel="noopener noreferrer"><img src="${esc(templateUrl(png))}" alt="${esc(card.title)}${card.channel==='offline'?'线下':'线上'}贺卡模板样张" loading="lazy"></a><div class="template-info"><span class="tag">${card.channel==='offline'?'线下面见 · 打印版':'线上发送 · 图片版'}</span><h3>${esc(card.title)}</h3><p>${esc(card.dimensions||'')}</p><div class="card-actions">${files.png?`<a class="btn" href="${esc(templateUrl(files.png))}" download>下载PNG</a>`:''}${files.pdf?`<a class="btn" href="${esc(templateUrl(files.pdf))}" download>下载打印PDF</a>`:''}</div></div></article>`;
+      }).join('');
+    }catch(error){el.innerHTML='<div class="empty-state"><strong>样张暂未载入</strong><p>请稍后刷新重试。你也可以直接在上方选择模板，填写后下载自己的贺卡。</p></div>';}
+  }
+  function updateFee() {
+    const countEl=document.getElementById('gift-count');if(!countEl)return;
+    const n=Math.max(0,Math.floor(Number(countEl.value)||0));
+    const limit=n<=10?0:Math.min(500,Math.floor((n-1)/10)*100);
+    const costEl=document.getElementById('gift-cost'), other=Math.max(0,Number(document.getElementById('other-share').value)||0);
+    let result=limit, explanation=`送出${n}份，对应最高档${limit}元；档位不累加。`;
+    if(costEl.value!==''){const cost=Math.max(0,Number(costEl.value)||0);result=Math.min(limit,Math.max(0,cost-other));explanation+=`扣除其他层级已承担费用后，剩余${Math.max(0,cost-other).toFixed(2)}元，支持额取两者较小值。`;}
+    document.getElementById('calc-label').textContent=costEl.value===''?'档位支持上限':'测算实际支持额';
+    document.getElementById('calc-result').innerHTML=`${Number(result.toFixed(2))}<small>元</small>`;
+    document.getElementById('calc-explain').textContent=explanation;
+  }
+  const compactLayout=window.matchMedia('(max-width: 1100px)');
+  function toolEntryId() {
+    return compactLayout.matches?'tools':'cards';
+  }
+  function attach() {
+    const letterToolLink=document.getElementById('letter-tool-link');
+    const syncToolLink=()=>{letterToolLink.hash=toolEntryId();};
+    syncToolLink();
+    compactLayout.addEventListener('change',syncToolLink);
+    app.addEventListener('click',event=>{
+      const button=event.target.closest('button');if(!button)return;
+      if(button.dataset.messageFilter!=null){if(messageFilter!==button.dataset.messageFilter){messageFilter=button.dataset.messageFilter;renderMessages();}return;}
+      if(button.dataset.giftFilter!=null){giftFilter=button.dataset.giftFilter;renderGifts();return;}
+      if(button.dataset.requestGift){window.openFeaturedRequest?.(button.dataset.requestGift);return;}
+      if(button.dataset.copyMessage){const m=arr(data.action?.messages).find(x=>x.id===button.dataset.copyMessage);if(m)copy(m.text||m.body||'','微信正文已复制，空行和表情已保留');return;}
+      if(button.hasAttribute('data-reopen-letter')){reopenPartnerLetter();return;}
+      if(button.hasAttribute('data-copy-invitation')){copy(PARTNER_INVITATION,'来信已复制，可与行动包二维码一起转发');return;}
+      if(button.hasAttribute('data-download-workshop')){downloadText(objectToText(data.action.workshop),'感恩主题文化研讨主持方案_3小时版.txt');return;}
+    });
+    const directory=document.querySelector('.phone-directory');
+    document.querySelectorAll('[data-section-link]').forEach(link=>link.addEventListener('click',()=>{if(directory)directory.open=false;}));
+    if('IntersectionObserver'in window){const observer=new IntersectionObserver(entries=>{for(const entry of entries){if(entry.isIntersecting){const id=entry.target.id==='consensus'?'start':entry.target.id;document.querySelectorAll('[data-section-link],#mobile-nav a').forEach(link=>link.classList.toggle('active',link.hash==='#'+id));}}},{rootMargin:'-10% 0px -65% 0px'});document.querySelectorAll('.section,#start').forEach(section=>observer.observe(section));}
+    if(location.hash)requestAnimationFrame(()=>{
+      const id=location.hash.slice(1);
+      const target=document.getElementById(id==='tools'?toolEntryId():id==='together'?'feedback':id);
+      if(target)target.scrollIntoView();
+    });
+  }
+  const letterEntryKey='landz-partner-letter-opened-2026-11';
+  let entryOpening=false,entryTimer;
+  function setEntryVisible(visible) {
+    const entry=document.getElementById('letter-entry');if(!entry)return;
+    entry.hidden=!visible;entry.setAttribute('aria-busy','false');
+    document.body.classList.toggle('letter-arrival',visible);
+    ['.site-header','#app','.site-footer','#mobile-nav'].forEach(selector=>{const element=document.querySelector(selector);if(element)element.inert=visible;});
+  }
+  function rememberLetterOpening(){try{sessionStorage.setItem(letterEntryKey,'1');}catch(_){}}
+  function enterPartnerLetter(showLetter=true) {
+    if(entryOpening)return;
+    const entry=document.getElementById('letter-entry');if(!entry)return;
+    entryOpening=true;entry.setAttribute('aria-busy','true');
+    entry.querySelectorAll('button').forEach(button=>button.disabled=true);
+    if(showLetter)entry.classList.add('is-opening');
+    const duration=showLetter&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches?760:0;
+    entryTimer=setTimeout(()=>{
+      setEntryVisible(false);rememberLetterOpening();entryOpening=false;entry.classList.remove('is-opening');
+      entry.querySelectorAll('button').forEach(button=>button.disabled=false);
+      const letter=document.querySelector('.welcome-letter-more');if(showLetter&&letter)letter.open=true;
+      const target=showLetter?document.querySelector('#start h1'):document.querySelector('#'+toolEntryId()+' h2');
+      if(target){target.tabIndex=-1;target.focus({preventScroll:true});target.scrollIntoView({behavior:'instant',block:'start'});}
+    },duration);
+  }
+  function reopenPartnerLetter() {
+    const entry=document.getElementById('letter-entry');if(!entry)return;
+    clearTimeout(entryTimer);entryOpening=false;entry.classList.remove('is-opening');
+    entry.querySelectorAll('button').forEach(button=>button.disabled=false);
+    setEntryVisible(true);document.getElementById('open-partner-letter').focus({preventScroll:true});
+  }
+  function initLetterEntry() {
+    const entry=document.getElementById('letter-entry');if(!entry)return;
+    let seen=false;try{seen=sessionStorage.getItem(letterEntryKey)==='1';}catch(_){}
+    const directTool=!!location.hash&&location.hash!=='#start';
+    entry.querySelectorAll('button').forEach(button=>button.disabled=false);
+    document.getElementById('entry-open-text').textContent='开启这封信';
+    document.getElementById('open-partner-letter').addEventListener('click',()=>enterPartnerLetter(true));
+    entry.querySelector('[data-open-letter]').addEventListener('click',()=>enterPartnerLetter(true));
+    document.getElementById('skip-letter-entry').addEventListener('click',()=>enterPartnerLetter(false));
+    entry.addEventListener('keydown',event=>{
+      if(entry.hidden||entryOpening)return;
+      if(event.key==='Escape'){event.preventDefault();enterPartnerLetter(false);return;}
+      if(event.key!=='Tab')return;
+      const buttons=[...entry.querySelectorAll('button:not([disabled])')],first=buttons[0],last=buttons[buttons.length-1];
+      if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+    });
+    setEntryVisible(!seen&&!directTool);
+    if(!seen&&!directTool)document.getElementById('open-partner-letter').focus({preventScroll:true});
+  }
+
+  async function init() {
+    try {
+      data=window.GRATITUDE_CONTENT;
+      if(!data){const response=await fetch('content.json?v=20261103-shanghai-report');if(!response.ok)throw new Error('missing content');data=await response.json();}
+      if(!data.action)throw new Error('invalid content');
+      const current=new URL(location.href);if(current.searchParams.has('view')){current.searchParams.delete('view');history.replaceState(history.state,'',current.pathname+current.search+current.hash);}
+      renderAction();attach();initLetterEntry();
+    }catch(error){setEntryVisible(false);console.error(error);app.innerHTML='<div class="error-state"><h1>内容暂未载入</h1><p>请刷新后再试。离线打开时，请保持完整交付包的页面、内容和组件文件位于同一目录。</p><a class="btn" href="?view=action">重新打开行动包</a></div>';}
+  }
+  init();
+})();

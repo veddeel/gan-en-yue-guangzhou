@@ -1,0 +1,5 @@
+// Configure only a Guangzhou Supabase publishable URL/key after its project exists.
+// Never put a database password or service_role key in this public file.
+window.GRATITUDE_BACKEND = { provider: 'disabled' };
+window.GRATITUDE_ORDER_ENDPOINT = 'https://landz-guangzhou-records-2026.frillymars5.chatgpt.site/api/requests';
+window.GRATITUDE_FEEDBACK_ENDPOINT = 'https://landz-guangzhou-records-2026.frillymars5.chatgpt.site/api/feedback';
